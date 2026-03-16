@@ -26,7 +26,8 @@ jobs:
           pip install librosa soundfile numpy
           pip install onnxruntime
           pip install torch --index-url https://download.pytorch.org/whl/cpu
-          pip install torchinfo
+          pip install torchinfo torchmetrics
+          pip install pytorch-lightning
           pip install openwakeword==0.6.0
           
       - name: Download OWW base models
