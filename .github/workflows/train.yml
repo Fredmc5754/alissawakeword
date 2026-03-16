@@ -1,0 +1,46 @@
+name: Train Alissa Wake Word
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # permet de lancer manuellement
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install openwakeword==0.6.0
+          pip install tflite-runtime || pip install tensorflow-cpu
+          pip install onnxruntime
+          pip install librosa soundfile numpy
+
+      - name: Download OWW base models
+        run: |
+          python -c "import openwakeword; openwakeword.utils.download_models()"
+
+      - name: Generate synthetic training data
+        run: |
+          python generate_samples.py
+
+      - name: Train model
+        run: |
+          python train.py
+
+      - name: Upload model artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: alissa-model
+          path: output/alissa.onnx
+          retention-days: 90
