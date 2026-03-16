@@ -21,11 +21,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-         pip install --upgrade pip
+          pip install --upgrade pip
           pip install gTTS
           pip install librosa soundfile numpy
           pip install onnxruntime
           pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install torchinfo
           pip install openwakeword==0.6.0
       - name: Download OWW base models
         run: |
