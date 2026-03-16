@@ -3,7 +3,7 @@ name: Train Alissa Wake Word
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:  # permet de lancer manuellement
+  workflow_dispatch:
 
 jobs:
   train:
@@ -21,10 +21,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install openwakeword==0.6.0
-          pip install tflite-runtime || pip install tensorflow-cpu
-          pip install onnxruntime
+          pip install --upgrade pip
+          pip install gTTS
           pip install librosa soundfile numpy
+          pip install onnxruntime
+          pip install openwakeword==0.6.0
 
       - name: Download OWW base models
         run: |
